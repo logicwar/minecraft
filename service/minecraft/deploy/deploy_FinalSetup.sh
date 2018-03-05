@@ -36,6 +36,8 @@ if [ ! -f $SERVER_PROPERTIES ]; then
 		cp /defaults/server.properties_VANILLA $SERVER_PROPERTIES
 		;;
 	esac
+	#Set access rights
+	chmod -R 660 $SERVER_PROPERTIES
 
 	# "standard" parameters
 	setParameter "motd" "$MOTD"
