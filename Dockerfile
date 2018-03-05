@@ -15,26 +15,48 @@ LABEL maintainer="Logicwar <logicwar@gmail.com>"
 ##        ENVIRONMENTAL CONFIG         ##
 #########################################
 
-# Set correct environment variables
-ENV LC_ALL="en_US.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8"
-ENV DEBIAN_FRONTEND=noninteractive MLDONKEY_DIR="/var/lib/mldonkey"
+# Set default environment variables
+ENV DEBIAN_FRONTEND=noninteractive \
+    DUID=1001 DGID=1001 \
+    JVM_XX_OPTS="-XX:+UseG1GC" \
+    JVM_MIN_MEM="1024M" \
+    JVM_MAX_MEM="1024M" \
+    TYPE="VANILLA" \
+    VERSION="LATEST" \
+    FORGEVERSION="RECOMMENDED" \
+    EULA=""
 
 #########################################
 ##          DOWNLOAD PACKAGES          ##
 #########################################
 
-# Download and install Dependencies & Main Software
+# Download and install Dependencies
 RUN \
- echo "**** Install Dependencies & Main Software ****" && \
+ echo "**** Install Dependencies ****" && \
  apt-get update && \
  apt-get install --no-install-recommends -y \
-	mldonkey-server && \
+	wget \
+	curl \
+	jq \
+	unzip \
+	git && \
+ echo "**** cleanup ****" && \
+ apt-get clean && \
  rm -rf \
 	/var/lib/apt/lists/* \	
 	/tmp/* \
-	/var/tmp/* \
-	/var/log/mldonkey \
-	/var/lib/mldonkey/*
+	/var/tmp/*
+
+# Download and install latest jre 8 (Java)
+RUN \
+ echo "**** Install JAVA JDK ****" && \
+ cd /opt && \
+wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jre-8u162-linux-x64.tar.gz && \
+ tar -zxvf jre-8u162-linux-x64.tar.gz && \
+ update-alternatives --install /usr/bin/java java /opt/jre1.8.0_162/bin/java 1 && \
+ echo "**** cleanup ****" && \
+ rm jre-8u162-linux-x64.tar.gz
+
 
 #########################################
 ##       COPY & RUN SETUP SCRIPT       ##
@@ -53,6 +75,6 @@ RUN \
 ##         EXPORTS AND VOLUMES         ##
 #########################################
 
-EXPOSE 4000 4001 4080 20562 20566/udp 16965 16965/udp 6209 6209/udp 6881 6882 3617/udp 4444 4444/udp
-VOLUME /var/lib/mldonkey /mnt/mldonkey_tmp /mnt/mldonkey_completed
+EXPOSE 25565 25575
+VOLUME /opt/minecraft/data
 
