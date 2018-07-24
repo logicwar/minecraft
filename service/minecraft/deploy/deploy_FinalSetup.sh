@@ -142,10 +142,14 @@ fi
 
 
 #########################################
-##         JAVA MEMORY SETTINGS        ##
+##      JAVA/PHP MEMORY SETTINGS       ##
 #########################################
-echo "[$(date +"%H:%M:%S")] [Container Setup]: Setting min JAVA allocated memory to $JVM_MIN_MEM and max to $JVM_MAX_MEM"
-JVM_OPTS="-Xms$JVM_MIN_MEM -Xmx$JVM_MAX_MEM $JVM_OPTS"
+if [ ! -z $PM_SERVER_START ]; then
+		echo "[$(date +"%H:%M:%S")] [Container Setup]: Setting PHP"
+	else
+		echo "[$(date +"%H:%M:%S")] [Container Setup]: Setting min JAVA allocated memory to $JVM_MIN_MEM and max to $JVM_MAX_MEM"
+		JVM_OPTS="-Xms$JVM_MIN_MEM -Xmx$JVM_MAX_MEM $JVM_OPTS"
+fi
 
 
 #########################################
@@ -164,5 +168,10 @@ if [ ! -z $FTB_SERVER_START ]; then
 	if [ ! -z $JVM_MIN_MEM ]; then echo "export MIN_RAM=\"$JVM_MIN_MEM\"" >> $INSTALL_DIR/settings-local.sh;fi
 	if [ ! -z $JVM_MAX_MEM ]; then echo "export MAX_RAM=\"$JVM_MAX_MEM\"" >> $INSTALL_DIR/settings-local.sh;fi
 	if [ ! -z "$JVM_XX_OPTS" ]; then echo "export JAVA_PARAMETERS=\"$JVM_XX_OPTS\"" >> $INSTALL_DIR/settings-local.sh;fi
+fi
+
+# POCKETMINE Export
+if [ ! -z $PM_SERVER_START ]; then
+	echo $PM_SERVER_START >> /container/environment/PM_SERVER_START
 fi
 

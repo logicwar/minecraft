@@ -6,7 +6,7 @@
 
 # [Docker Container for Minecraft][hub]
 
-This is a Docker image based on osixia/light-baseimage for running  a VANILLA, FORGE, FTB or SPIGOT Minecraft server on Java SE Runtime Environment 8u162 (it is inspired by the awesome work of : [itzg/minecraft-server][itzg]).
+This is a Docker image based on osixia/light-baseimage for running  a VANILLA, FORGE, FTB or SPIGOT Minecraft server on Java SE Runtime Environment 8u181 (it is inspired by the awesome work of : [itzg/minecraft-server][itzg]).
 
 Minecraft is a sandbox video game created and designed by Swedish game designer Markus "Notch" Persson, and later fully developed and published by Mojang. The creative and building aspects of Minecraft allow players to build with a variety of different cubes in a 3D procedurally generated world. Other activities in the game include exploration, resource gathering, crafting, and combat. [Wikipedia][Minecraft_wikipedia]
 

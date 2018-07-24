@@ -6,6 +6,23 @@
 export VERSIONS_JSON="https://launchermeta.mojang.com/mc/game/version_manifest.json"
 export INSTALL_DIR="/opt/minecraft/data"
 
+######################################################################### 
+# Function : installJAVA
+# Purpose  : Install JAVA 8
+# Remarks  : -
+######################################################################### 
+function installJAVA {
+	# Download and install latest jre 8 (Java)
+	echo "**** Install JAVA JRE 8 ****"
+	cd /opt
+	wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jre-8u181-linux-x64.tar.gz
+	tar -zxvf jre-8u181-linux-x64.tar.gz
+	update-alternatives --install /usr/bin/java java /opt/jre1.8.0_181/bin/java 1
+	echo "**** cleanup ****"
+	rm jre-8u181-linux-x64.tar.gz
+}
+
+
 #########################################
 ##           MINECRAFT EULA            ##
 #########################################
@@ -48,24 +65,49 @@ esac
 echo "[$(date +"%H:%M:%S")] [Container Setup]: Deploying a '$TYPE' Minecraft server"
 case "$TYPE" in
   SPIGOT|spigot)
-	exec /container/service/minecraft/deploy/deploy_SPIGOT.sh
+	installJAVA
+	exec /sbin/setuser docker /container/service/minecraft/deploy/deploy_SPIGOT.sh
 	;;
 
   FORGE|forge)
-	exec /container/service/minecraft/deploy/deploy_FORGE.sh
+	installJAVA
+	exec /sbin/setuser docker /container/service/minecraft/deploy/deploy_FORGE.sh
 	;;
 
   FTB|ftb)
-	exec /container/service/minecraft/deploy/deploy_FTB.sh
+	installJAVA
+	exec /sbin/setuser docker /container/service/minecraft/deploy/deploy_FTB.sh
 	;;
 
   VANILLA|vanilla)
-	exec /container/service/minecraft/deploy/deploy_VANILLA.sh
+	installJAVA
+	exec /sbin/setuser docker /container/service/minecraft/deploy/deploy_VANILLA.sh
+	;;
+
+  POCKETMINE|pocketmine)
+	echo "**** Install extra Dependencies ****"
+	apt-get update
+	apt-get install --no-install-recommends -y \
+		make \
+		autoconf \
+		automake \
+		m4 \
+		bzip2 \
+		bison \
+		g++ \
+		libtool-bin
+	echo "**** cleanup ****"
+	apt-get clean
+	rm -rf \
+		/var/lib/apt/lists/* \	
+		/tmp/* \
+		/var/tmp/*
+	exec /sbin/setuser docker /container/service/minecraft/deploy/deploy_POCKETMINE.sh
 	;;
 
   *)
 	echo "Invalid type: '$TYPE'"
-	echo "Valid types: VANILLA|FORGE|SPIGOT|FTB"
+	echo "Valid types: VANILLA|FORGE|SPIGOT|FTB|POCKETMINE"
 	exit
 	;;
 esac

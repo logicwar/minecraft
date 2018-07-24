@@ -8,5 +8,9 @@ cd $INSTALL_DIR
 if [ ! -z $FTB_SERVER_START ]; then
 	exec /sbin/setuser docker $FTB_SERVER_START
 else
-	exec /sbin/setuser docker java $JVM_XX_OPTS $JVM_OPTS -jar $SERVER nogui
+	if [ ! -z $PM_SERVER_START ]; then
+		exec /sbin/setuser docker $PM_SERVER_START
+	else
+		exec /sbin/setuser docker java $JVM_XX_OPTS $JVM_OPTS -jar $SERVER nogui
+	fi
 fi

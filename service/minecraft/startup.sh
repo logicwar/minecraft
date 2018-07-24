@@ -34,7 +34,7 @@ if [ ! -f "/etc/initialbootpassed" ]; then
 	##          DEPLOY MINECRAFT           ##
 	#########################################
 
-	exec /sbin/setuser docker /container/service/minecraft/deploy/deploy.sh
+	exec /container/service/minecraft/deploy/deploy.sh
 
 else
 	echo "[$(date +"%H:%M:%S")] [Container Setup]: -------> Standard boot"

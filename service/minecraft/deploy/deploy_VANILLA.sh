@@ -4,7 +4,15 @@
 ## CONSTANTS ##
 ###############
 export SERVER="minecraft_server.$VANILLA_VERSION.jar"
-MINECRAFT_DOWNLOAD="https://s3.amazonaws.com/Minecraft.Download/versions/$VANILLA_VERSION/$SERVER"
+case "$VANILLA_VERSION" in
+  1.13)
+	MINECRAFT_DOWNLOAD="https://launcher.mojang.com/mc/game/1.13/server/d0caafb8438ebd206f99930cfaecfa6c9a13dca0/server.jar"
+	;;
+  *)
+	MINECRAFT_DOWNLOAD="https://s3.amazonaws.com/Minecraft.Download/versions/$VANILLA_VERSION/$SERVER"
+
+	;;
+esac
 
 #########################################
 ##          DOWNLOAD MINECRAFT         ##
@@ -13,7 +21,7 @@ MINECRAFT_DOWNLOAD="https://s3.amazonaws.com/Minecraft.Download/versions/$VANILL
 if [ ! -e $SERVER ]; then
 	echo "[$(date +"%H:%M:%S")] [Container Setup]: Downloading $SERVER ..."
 	cd $INSTALL_DIR
-	wget -q $MINECRAFT_DOWNLOAD
+	wget -q -O $SERVER $MINECRAFT_DOWNLOAD
 fi
 
 #########################################

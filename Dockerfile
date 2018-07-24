@@ -47,16 +47,6 @@ RUN \
 	/tmp/* \
 	/var/tmp/*
 
-# Download and install latest jre 8 (Java)
-RUN \
- echo "**** Install JAVA JDK ****" && \
- cd /opt && \
-wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jre-8u162-linux-x64.tar.gz && \
- tar -zxvf jre-8u162-linux-x64.tar.gz && \
- update-alternatives --install /usr/bin/java java /opt/jre1.8.0_162/bin/java 1 && \
- echo "**** cleanup ****" && \
- rm jre-8u162-linux-x64.tar.gz
-
 
 #########################################
 ##       COPY & RUN SETUP SCRIPT       ##
