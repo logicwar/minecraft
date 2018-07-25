@@ -4,9 +4,9 @@
 [tz_wikipedia]:https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 [eula]:https://account.mojang.com/documents/minecraft_eula
 
-# [Docker Container for Minecraft][hub]
+# [Docker Container for JAVA & PE Minecraft][hub]
 
-This is a Docker image based on osixia/light-baseimage for running  a VANILLA, FORGE, FTB or SPIGOT Minecraft server on Java SE Runtime Environment 8u181 (it is inspired by the awesome work of : [itzg/minecraft-server][itzg]).
+This is a Docker image based on osixia/light-baseimage for running  a VANILLA, FORGE, FTB, SPIGOT or POCKETMINE Minecraft server on Java SE Runtime Environment 8u181 or PHP 7.2 (it is inspired by the awesome work of : [itzg/minecraft-server][itzg]).
 
 Minecraft is a sandbox video game created and designed by Swedish game designer Markus "Notch" Persson, and later fully developed and published by Mojang. The creative and building aspects of Minecraft allow players to build with a variety of different cubes in a 3D procedurally generated world. Other activities in the game include exploration, resource gathering, crafting, and combat. [Wikipedia][Minecraft_wikipedia]
 
@@ -322,6 +322,33 @@ To use a pre-downloaded and pre-compiled SPIGOT version, place it in the attache
 
 To be taken into account the container must be restarted.
 
+## How to deploy a POCKETMINE server
+
+To download and install the latest version of POCKETMINE server :
+```
+  $ docker run -it --name=minecraft \
+               -e EULA=TRUE \
+               -e TYPE=POCKETMINE \
+               -p 19132:25565/udp \
+               logicwar/minecraft
+```
+
+To use a persistant 'data' directory on you host filesystem (make sure to use a User and Group ID which have proper accesses to the host directory) :
+```
+  $ docker run -it --name=minecraft \
+               -v <path for data files>:/opt/minecraft/data:rw \
+               -e DGID=<gid> \
+               -e DUID=<uid> \
+               -e EULA=TRUE \
+               -e TYPE=POCKETMINE \
+               -p 19132:25565/udp \
+               logicwar/minecraft
+```
+###Installing plugins
+* The **plugins** must copied in the 'plugins' folder of the /opt/minecraft/data/ mount.
+
+To be taken into account the container must be restarted.
+
 ## All Server default configuation
 
 The server intitial setup is made using the following default values and can be overriden by editing the `server.properities` file when the service is stopped or for some properties at server creation : 
@@ -371,6 +398,35 @@ The server intitial setup is made using the following default values and can be 
 |view-distance|10|
 |white-list|false|
 
+## Sample of a simple docker-compose.yml
+```
+version: "3"
+
+services:
+  minecraft-server:
+    image: logicwar/minecraft:latest
+    volumes:
+      - "/ContainerPersistentMounts/Minecraft/PocketMine/Data1:/opt/minecraft/data:rw"
+    ports:
+      - "19132:25565/udp"
+      - "19132:25575"
+    environment:
+      EULA: "TRUE"
+      DUID: "1004"
+      DGID: "1003"
+      ENABLE_RCON: "FALSE"
+      MOTD: "Home Server - PocketMine - 1"
+      TYPE: "POCKETMINE"
+      TZ: "Europe/Zurich"
+      GAMEMODE: "0"
+      DIFFICULTY: "1"
+    container_name: "minecraft-server-pm-1"
+    hostname: "minecraft-server-pm-1"
+    network_mode: "bridge"
+    tty: true
+    stdin_open: true
+```
 
 ## Versions
 + **V0.1** Initial Release
++ **V0.2** Quick fix to load  13.1 VANILLA version and add POCKETMINE Support
