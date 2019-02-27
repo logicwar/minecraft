@@ -3,6 +3,7 @@
 [Minecraft_wikipedia]:https://en.wikipedia.org/wiki/Minecraft
 [tz_wikipedia]:https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 [eula]:https://account.mojang.com/documents/minecraft_eula
+[pocketmine]:https://github.com/pmmp/PocketMine-MP/releases
 
 # [Docker Container for JAVA & PE Minecraft][hub]
 
@@ -89,7 +90,7 @@ You will then need **root** rights to access the `/var/lib/docker/volumes/6f5839
 
 ### Minecraft Server Properties
 
-* `-e ALLOW_NETHER` - (TRUE|FALSE **default:** TRUE)
+* `-e ALLOW_NETHER` - (TRUE|FALSE **default:0M8x5ASuniWEh9LCVvNZ** TRUE)
 * `-e ANNOUNCE_PLAYER_ACHIEVEMENTS` - (TRUE|FALSE **default:** TRUE)
 * `-e DIFFICULTY` - (PEACEFUL|0|EASY|1|NORMAL|2|HARD|3 **default:** 1)
 * `-e ENABLE_COMMAND_BLOCK` - (TRUE|FALSE **default:** TRUE)
@@ -348,6 +349,11 @@ To use a persistant 'data' directory on you host filesystem (make sure to use a 
 * The **plugins** must copied in the 'plugins' folder of the /opt/minecraft/data/ mount.
 
 To be taken into account the container must be restarted.
+
+###Updating PocketMine-MP
+* Stop the container.
+* Delete your current PocketMine-MP.phar in your  "data" folder and replace it with the version you need (latest?) from : [Download][pocketmine].
+* Restart the container.
 
 ## All Server default configuation
 
