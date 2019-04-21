@@ -54,6 +54,7 @@ RUN \
 # copy setup, default parameters and init files
 COPY service /container/service
 COPY defaults /defaults
+COPY external_packages /opt
 
 # set permissions and run install-service script
 RUN \

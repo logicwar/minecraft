@@ -15,11 +15,11 @@ function installJAVA {
 	# Download and install latest jre 8 (Java)
 	echo "**** Install JAVA JRE 8 ****"
 	cd /opt
-	wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jre-8u201-linux-x64.tar.gz
-	tar -zxvf jre-8u201-linux-x64.tar.gz
-	update-alternatives --install /usr/bin/java java /opt/jre1.8.0_201/bin/java 1
+#	wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jre-8u211-linux-x64.tar.gz
+	tar -zxvf jre-8u211-linux-x64.tar.gz
+	update-alternatives --install /usr/bin/java java /opt/jre1.8.0_211/bin/java 1
 	echo "**** cleanup ****"
-	rm jre-8u201-linux-x64.tar.gz
+	rm jre-8u211-linux-x64.tar.gz
 }
 
 
@@ -102,6 +102,7 @@ case "$TYPE" in
 		/var/lib/apt/lists/* \	
 		/tmp/* \
 		/var/tmp/*
+	rm /opt/jre-8u211-linux-x64.tar.gz
 	exec /sbin/setuser docker /container/service/minecraft/deploy/deploy_POCKETMINE.sh
 	;;
 

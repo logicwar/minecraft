@@ -4,15 +4,12 @@
 ## CONSTANTS ##
 ###############
 export SERVER="minecraft_server.$VANILLA_VERSION.jar"
-case "$VANILLA_VERSION" in
-  1.13)
-	MINECRAFT_DOWNLOAD="https://launcher.mojang.com/mc/game/1.13/server/d0caafb8438ebd206f99930cfaecfa6c9a13dca0/server.jar"
-	;;
-  *)
-	MINECRAFT_DOWNLOAD="https://s3.amazonaws.com/Minecraft.Download/versions/$VANILLA_VERSION/$SERVER"
 
-	;;
-esac
+#########################################
+##           GET DOWNLOAD URL          ##
+#########################################
+VERSIONMANIFESTURL=`curl -fsSL $VERSIONS_JSON | jq --arg VANILLA_VERSION "$VANILLA_VERSION" --raw-output '[.versions[]|select(.id == $VANILLA_VERSION)][0].url'`
+MINECRAFT_DOWNLOAD=`curl -fsSL $VERSIONMANIFESTURL | jq --raw-output '.downloads.server.url'`
 
 #########################################
 ##          DOWNLOAD MINECRAFT         ##
