@@ -15,11 +15,11 @@ function installJAVA {
 	# Download and install latest jre 8 (Java)
 	echo "**** Install JAVA JRE 8 ****"
 	cd /opt
-#	wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jre-8u211-linux-x64.tar.gz
-	tar -zxvf jre-8u211-linux-x64.tar.gz
-	update-alternatives --install /usr/bin/java java /opt/jre1.8.0_211/bin/java 1
+	wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" https://github.com/AdoptOpenJDK/openjdk16-binaries/releases/download/jdk-16.0.1%2B9/OpenJDK16U-jre_x64_linux_hotspot_16.0.1_9.tar.gz
+	tar -zxvf OpenJDK16U-jre_x64_linux_hotspot_16.0.1_9.tar.gz
+	update-alternatives --install /usr/bin/java java /opt/jdk-16.0.1+9-jre/bin/java 1
 	echo "**** cleanup ****"
-	rm jre-8u211-linux-x64.tar.gz
+	rm OpenJDK16U-jre_x64_linux_hotspot_16.0.1_9.tar.gz
 }
 
 

@@ -1,4 +1,4 @@
-FROM osixia/light-baseimage:1.1.1
+FROM osixia/light-baseimage:1.3.3-amd64
 
 #########################################
 ##             SET LABELS              ##
@@ -20,7 +20,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     DUID=1001 DGID=1001 \
     JVM_XX_OPTS="-XX:+UseG1GC" \
     JVM_MIN_MEM="1024M" \
-    JVM_MAX_MEM="1024M" \
+    JVM_MAX_MEM="2048M" \
     TYPE="VANILLA" \
     VERSION="LATEST" \
     FORGEVERSION="RECOMMENDED" \

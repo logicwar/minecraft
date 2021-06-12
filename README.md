@@ -7,7 +7,7 @@
 
 # [Docker Container for JAVA & PE Minecraft][hub]
 
-This is a Docker image based on osixia/light-baseimage for running  a VANILLA, FORGE, FTB, SPIGOT or POCKETMINE Minecraft server on Java SE Runtime Environment 8u201 or PHP 7.2 (it is inspired by the awesome work of : [itzg/minecraft-server][itzg]).
+This is a Docker image based on osixia/light-baseimage for running  a VANILLA, FORGE, FTB, SPIGOT or POCKETMINE Minecraft server on Java SE Runtime Environment 8u211 or PHP 7.2 (it is inspired by the awesome work of : [itzg/minecraft-server][itzg]).
 
 Minecraft is a sandbox video game created and designed by Swedish game designer Markus "Notch" Persson, and later fully developed and published by Mojang. The creative and building aspects of Minecraft allow players to build with a variety of different cubes in a 3D procedurally generated world. Other activities in the game include exploration, resource gathering, crafting, and combat. [Wikipedia][Minecraft_wikipedia]
 
@@ -86,7 +86,7 @@ You will then need **root** rights to access the `/var/lib/docker/volumes/6f5839
 * `-e JVM_OPTS` - Java options
 * `-e JVM_XX_OPTS` - experimental Java options (**default:** -XX:+UseG1GC)
 * `-e JVM_MIN_MEM` - initial allocated Java memory (**default:** 1GB)
-* `-e JVM_MAX_MEM` - maximum allocated Java memory (**default:** 1GB)~~~~
+* `-e JVM_MAX_MEM` - maximum allocated Java memory (**default:** 2GB)~~~~
 
 ### Minecraft Server Properties
 
@@ -436,3 +436,6 @@ services:
 ## Versions
 + **V0.1** Initial Release
 + **V0.2** Quick fix to load  13.1 VANILLA version and add POCKETMINE Support
++ **V0.3** Update to jre-8u201
++ **V0.4** Update to jre-8u211, temporary solution for required login to download java, use of version_manifest.json to retreive download jar url
++ **V0.5** Update to osixia/light-baseimage 1.3.3, change for AdoptopenJDK jdk-16.0.1+9 (removal of the temp solution for java), changed the default maximum allocated Java memory to 2 GB
